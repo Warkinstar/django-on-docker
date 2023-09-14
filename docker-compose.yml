@@ -10,3 +10,19 @@ services:
       - 8000:8000
     env_file:
       - ./.env.dev
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=hello_django
+      - POSTGRES_PASSWORD=hello_django
+      - POSTGRES_DB=hello_django_dev
+
+# Когда вы используете volumes в docker-compose.yml, чтобы создать именованный том,
+#  Docker самостоятельно управляет этим томом и его расположением на хостовой машине.
+#  Вы не указываете конкретную локальную директорию для монтирования, как в случае с - ./app/:/usr/src/app/.
+#  Вместо этого, Docker создает и управляет этим томом.
+volumes:
+  postgres_data:
