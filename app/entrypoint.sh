@@ -12,7 +12,7 @@ then
     echo "PostgreSQL started"
 fi
 
-python manage.py flush --no-input  # Удаление данных из таблиц
-python manage.py migrate  # Миграция бд
+# python manage.py flush --no-input  # Удаление данных из таблиц
+# python manage.py migrate  # Миграция бд
 
 exec "$@"
