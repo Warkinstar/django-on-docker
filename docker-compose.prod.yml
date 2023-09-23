@@ -7,6 +7,10 @@ services:
       context: ./app  # path
       dockerfile: Dockerfile.prod  # имя явно Dockerfile.prod
     command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    # Именованный том для хранения staticfiles(берутся из указанного пути контейнера)
+    # Именованный том в Docker абстрагирует точное местоположение, куда данные будут сохранены
+    volumes:
+      - static_volume:/home/app/web/staticfiles
     # Expose делает порт доступен только внутри других сервисов docker, не внешние
     expose:
       - 8000
@@ -24,6 +28,10 @@ services:
 
   nginx:
     build: ./nginx
+    # Именованный том для хранения staticfiles(берутся из указанного пути контейнера)
+    # Именованный том в Docker абстрагирует точное местоположение, куда данные будут сохранены
+    volumes:
+      - static_volume:/home/app/web/staticfiles
     ports:
       - 1337:80  # 1337:80(http)
     depends_on:
@@ -31,3 +39,4 @@ services:
 
 volumes:
   postgres_data:
+  static_volume:
